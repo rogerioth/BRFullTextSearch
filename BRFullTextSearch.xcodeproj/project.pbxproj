@@ -834,7 +834,82 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "TARGET=BRFullTextSearch\nACTION=\"clean build\"\nLIB=libBRFullTextSearch.a\nPRODUCT=BRFullTextSearch\n\nOUTPUT_DIR=\"${PROJECT_DIR}/Framework\"\nHEADERS_DIR=\"${OUTPUT_DIR}/Headers\"\nRESOURCE_DIR=\"${OUTPUT_DIR}/Resources\"\n\n# Start clean by removing output dir\nrm -rf ${HEADERS_DIR}\nmkdir -p \"${HEADERS_DIR}\"\n\n# Copy source headers into flat Headers directory\nrsync -a --include '*/' --include '**/*.h' --exclude '*' ${PROJECT_DIR}/clucene/src/shared/CLucene \"${HEADERS_DIR}/\"\nrsync -a --include '*/' --include '**/*.h' --exclude '*' ${PROJECT_DIR}/clucene/src/core/CLucene \"${HEADERS_DIR}/\"\nrsync -a --include '*/' --include '**/Snowball*.h' --exclude '*' --prune-empty-dirs ${PROJECT_DIR}/clucene/src/contribs-lib/CLucene \"${HEADERS_DIR}/\"\nrsync -a ${PROJECT_DIR}/clucene/src/contribs-lib/CLucene/snowball/libstemmer.h \"${HEADERS_DIR}/\"\nrsync -a --include 'CLucene' --include '**/*.h' --exclude '*' ${PROJECT_DIR}/${PRODUCT}/ \"${HEADERS_DIR}/\"\nrsync -a --include '*.lproj/' --include '*.lproj/*' --exclude '*' ${PROJECT_DIR}/${PRODUCT}/ \"${RESOURCE_DIR}/\"\n\necho \"Output to: ${OUTPUT_DIR}\"\n\n# change to \"Release Debug\" to build both\nCONFIGURATIONS=\"Debug Release\"\nfor CONFIG in ${CONFIGURATIONS}; do\n    FRAMEWORK_DIR=\"${OUTPUT_DIR}/${CONFIG}/${PRODUCT}.framework\"\n\n    echo \"Building $CONFIG build to ${FRAMEWORK_DIR}\"\n    rm -rf \"${FRAMEWORK_DIR}\"\n\n    DEVICE_DIR=${SYMROOT}/${CONFIG}-iphoneos\n    SIMULATOR_DIR=${SYMROOT}/${CONFIG}-iphonesimulator\n    UNIVERSAL_DIR=${SYMROOT}/${CONFIG}-universal\n\n    cd ${PROJECT_DIR}\n    xcodebuild -configuration ${CONFIG} -target ${TARGET} -sdk iphoneos ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO CONFIGURATION_BUILD_DIR=${DEVICE_DIR} >/dev/null\n    xcodebuild -configuration ${CONFIG} -target ${TARGET} -sdk iphonesimulator ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO CONFIGURATION_BUILD_DIR=${SIMULATOR_DIR} >/dev/null\n\n    rm -rf \"${UNIVERSAL_DIR}\"\n    mkdir \"${UNIVERSAL_DIR}\"\n\n    lipo -create -output \"${UNIVERSAL_DIR}/${PRODUCT}\" \"${DEVICE_DIR}/${LIB}\" \"${SIMULATOR_DIR}/${LIB}\"\n\n    mkdir -p \"${FRAMEWORK_DIR}/Versions/A\"\n\n    cd \"${FRAMEWORK_DIR}/Versions\"\n    ln -sf A Current\n\n    cp -r \"${HEADERS_DIR}\" \"${FRAMEWORK_DIR}/Versions/Current/\"\n  cp -r \"${RESOURCE_DIR}\" \"${FRAMEWORK_DIR}/Versions/Current/\"\n    cp \"${UNIVERSAL_DIR}/${PRODUCT}\" \"${FRAMEWORK_DIR}/Versions/Current\"\n\n    cd \"${FRAMEWORK_DIR}\"\n    ln -sf \"Versions/Current/${PRODUCT}\" \"${PRODUCT}\"\n    ln -sf Versions/Current/Headers Headers\n  ln -sf Versions/Current/Resources Resources\ndone\n";
+			shellScript = "set -euo pipefail
+
+TARGET=BRFullTextSearch
+ACTION=\"build\"
+LIB=libBRFullTextSearch.a
+PRODUCT=BRFullTextSearch
+
+WORKSPACE=\"${PROJECT_DIR}/BRFullTextSearch.xcworkspace\"
+PACKAGER_DERIVED_DATA=\"${PROJECT_DIR}/DerivedData/Packager\"
+PRODUCTS_DIR=\"${PACKAGER_DERIVED_DATA}/Build/Products\"
+OBJROOT=\"${PACKAGER_DERIVED_DATA}/Build/Intermediates.noindex\"
+
+OUTPUT_DIR=\"${PROJECT_DIR}/Framework\"
+HEADERS_DIR=\"${OUTPUT_DIR}/Headers\"
+RESOURCE_DIR=\"${OUTPUT_DIR}/Resources\"
+CLUCENE_SRC=\"${PODS_ROOT:-${PROJECT_DIR}/Pods}/BRCLucene/src\"
+
+rm -rf \"${PACKAGER_DERIVED_DATA}\"
+mkdir -p \"${PACKAGER_DERIVED_DATA}\"
+rm -rf \"${HEADERS_DIR}\" \"${RESOURCE_DIR}\"
+mkdir -p \"${HEADERS_DIR}\" \"${RESOURCE_DIR}\"
+
+if [ ! -d \"${CLUCENE_SRC}\" ]; then
+  echo \"CLucene sources not found at ${CLUCENE_SRC}, skipping packaging.\"
+  exit 0
+fi
+
+rsync -a --include '*/' --include '**/*.h' --exclude '*' \"${CLUCENE_SRC}/shared/CLucene\" \"${HEADERS_DIR}/\"
+rsync -a --include '*/' --include '**/*.h' --exclude '*' \"${CLUCENE_SRC}/core/CLucene\" \"${HEADERS_DIR}/\"
+rsync -a --include '*/' --include '**/Snowball*.h' --exclude '*' --prune-empty-dirs \"${CLUCENE_SRC}/contribs-lib/CLucene\" \"${HEADERS_DIR}/\"
+rsync -a \"${CLUCENE_SRC}/contribs-lib/CLucene/snowball/libstemmer.h\" \"${HEADERS_DIR}/\"
+rsync -a --include 'CLucene' --include '**/*.h' --exclude '*' \"${PROJECT_DIR}/${PRODUCT}/\" \"${HEADERS_DIR}/\"
+rsync -a --include '*.lproj/' --include '*.lproj/*' --exclude '*' \"${PROJECT_DIR}/${PRODUCT}/\" \"${RESOURCE_DIR}/\"
+
+echo \"Output to: ${OUTPUT_DIR}\"
+
+build_framework() {
+  local source_lib=\"$1\"
+  local framework_path=\"$2\"
+
+  rm -rf \"${framework_path}\"
+  mkdir -p \"${framework_path}/Versions/A\"
+
+  cp \"${source_lib}\" \"${framework_path}/Versions/A/${PRODUCT}\"
+  cp -r \"${HEADERS_DIR}\" \"${framework_path}/Versions/A/\"
+  cp -r \"${RESOURCE_DIR}\" \"${framework_path}/Versions/A/\"
+
+  (cd \"${framework_path}/Versions\" && ln -sf A Current)
+  (cd \"${framework_path}\" && ln -sf \"Versions/Current/${PRODUCT}\" \"${PRODUCT}\")
+  (cd \"${framework_path}\" && ln -sf Versions/Current/Headers Headers)
+  (cd \"${framework_path}\" && ln -sf Versions/Current/Resources Resources)
+}
+
+CONFIGURATIONS=\"Debug Release\"
+for CONFIG in ${CONFIGURATIONS}; do
+    FRAMEWORK_DIR=\"${OUTPUT_DIR}/${CONFIG}/${PRODUCT}.xcframework\"
+    DEVICE_FRAMEWORK_DIR=\"${OUTPUT_DIR}/${CONFIG}/device/${PRODUCT}.framework\"
+    SIMULATOR_FRAMEWORK_DIR=\"${OUTPUT_DIR}/${CONFIG}/simulator/${PRODUCT}.framework\"
+
+    echo \"Building $CONFIG build to ${FRAMEWORK_DIR}\"
+    rm -rf \"${FRAMEWORK_DIR}\" \"${DEVICE_FRAMEWORK_DIR}\" \"${SIMULATOR_FRAMEWORK_DIR}\"
+
+    DEVICE_DIR=${PRODUCTS_DIR}/${CONFIG}-iphoneos
+    SIMULATOR_DIR=${PRODUCTS_DIR}/${CONFIG}-iphonesimulator
+
+    rm -rf \"${DEVICE_DIR}\" \"${SIMULATOR_DIR}\"
+
+    xcodebuild -workspace \"${WORKSPACE}\" -scheme \"${TARGET}\" -configuration ${CONFIG} -sdk iphoneos -destination \"generic/platform=iOS\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO CONFIGURATION_BUILD_DIR=${DEVICE_DIR} SYMROOT=${PRODUCTS_DIR} BUILD_DIR=${PRODUCTS_DIR} OBJROOT=${OBJROOT} -derivedDataPath \"${PACKAGER_DERIVED_DATA}\"
+    xcodebuild -workspace \"${WORKSPACE}\" -scheme \"${TARGET}\" -configuration ${CONFIG} -sdk iphonesimulator -destination \"generic/platform=iOS Simulator\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO CONFIGURATION_BUILD_DIR=${SIMULATOR_DIR} SYMROOT=${PRODUCTS_DIR} BUILD_DIR=${PRODUCTS_DIR} OBJROOT=${OBJROOT} -derivedDataPath \"${PACKAGER_DERIVED_DATA}\"
+
+    build_framework \"${DEVICE_DIR}/${LIB}\" \"${DEVICE_FRAMEWORK_DIR}\"
+    build_framework \"${SIMULATOR_DIR}/${LIB}\" \"${SIMULATOR_FRAMEWORK_DIR}\"
+
+    xcodebuild -create-xcframework         -framework \"${DEVICE_FRAMEWORK_DIR}\"         -framework \"${SIMULATOR_FRAMEWORK_DIR}\"         -output \"${FRAMEWORK_DIR}\"
+done
+";
 		};
 		E38E8DD21C6A596A000EB763 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1130,6 +1205,7 @@
 			baseConfigurationReference = E420548430583E76A949D1FF /* Pods-BasePods-BRFullTextSearch.debug.xcconfig */;
 			buildSettings = {
 				DSTROOT = /tmp/BRFullTextSearch.dst;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "i386 x86_64";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BRFullTextSearch/BRFullTextSearch-Prefix.pch";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1142,6 +1218,7 @@
 			baseConfigurationReference = 8DD1D88DC310484ED3F8C547 /* Pods-BasePods-BRFullTextSearch.release.xcconfig */;
 			buildSettings = {
 				DSTROOT = /tmp/BRFullTextSearch.dst;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "i386 x86_64";
 				GCC_OPTIMIZATION_LEVEL = 1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BRFullTextSearch/BRFullTextSearch-Prefix.pch";
@@ -1176,6 +1253,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "i386 x86_64";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1208,6 +1286,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "i386 x86_64";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -1251,7 +1330,7 @@
 				INFOPLIST_FILE = "BRFullTextSearch Mac OS/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "us.bluerocket.brfulltextsearch-macos";
 				PRODUCT_NAME = BRFullTextSearch;
@@ -1298,7 +1377,7 @@
 				INFOPLIST_FILE = "BRFullTextSearch Mac OS/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "us.bluerocket.brfulltextsearch-macos";
 				PRODUCT_NAME = BRFullTextSearch;

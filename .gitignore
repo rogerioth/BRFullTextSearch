@@ -1,6 +1,7 @@
 /Framework
 /Headers
 /BRFullTextSearch.framework
+/DerivedData
 .DS_Store
 xcuserdata
 *.xccheckout

@@ -16,8 +16,9 @@ Pod::Spec.new do |s|
   s.license      = "Apache License, Version 2.0"
   s.author       = { "Matt Magoffin" => "matt@bluerocket.us" }
 
-  s.ios.deployment_target = '5.1'
-  s.osx.deployment_target = '10.7'
+  s.ios.deployment_target = '12.0'
+  s.osx.deployment_target = '10.15'
+  s.visionos.deployment_target = '1.0'
 
   s.source       = { :git => "https://github.com/Blue-Rocket/BRFullTextSearch.git", :tag => s.version.to_s }
 
@@ -28,6 +29,9 @@ Pod::Spec.new do |s|
   s.xcconfig		= {
   						'CLANG_CXX_LANGUAGE_STANDARD' => 'c++0x',
   						'CLANG_CXX_LIBRARY' => 'libc++',
+  						'SUPPORTED_PLATFORMS' => 'iphonesimulator iphoneos macosx xros xrsimulator',
+  						'SUPPORTS_MACCATALYST' => 'YES',
+  						'TARGETED_DEVICE_FAMILY' => '1,2,6,7',
   					  }
 
   s.requires_arc = true
