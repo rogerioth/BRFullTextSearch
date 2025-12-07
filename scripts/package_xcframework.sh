@@ -41,7 +41,7 @@ build_framework_from_static_lib() {
   mkdir -p "${framework_path}/Versions/A/Modules"
   cat > "${framework_path}/Versions/A/Modules/module.modulemap" <<'EOF'
 framework module BRFullTextSearch {
-  umbrella header "BRFullTextSearch.h"
+  umbrella header "../Headers/BRFullTextSearch.h"
   export *
   module * { export * }
 }

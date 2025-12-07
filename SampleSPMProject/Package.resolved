@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "brfulltextsearch",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/rogerioth/BRFullTextSearch.git",
+      "state" : {
+        "revision" : "5966994a5a06c561839856a3e3d03666df61164a",
+        "version" : "1.0.2"
+      }
+    }
+  ],
+  "version" : 2
+}
