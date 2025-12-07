@@ -61,6 +61,15 @@ require_path "${CATALYST_LIB}" "file"
 require_path "${HEADERS_DIR}" "dir"
 require_path "${RESOURCES_DIR}" "dir"
 
+copy_public_headers() {
+  local framework_path="$1"
+  local dest="${framework_path}/Versions/A/Headers"
+  mkdir -p "${dest}"
+  for header in "${ROOT_DIR}/BRFullTextSearch/"*.h; do
+    cp "${header}" "${dest}/"
+  done
+}
+
 add_modulemap() {
   local framework_path="$1"
   mkdir -p "${framework_path}/Versions/A/Modules"
@@ -79,6 +88,10 @@ echo "Building Mac Catalyst framework wrapper..."
 build_framework_from_static_lib "${CATALYST_LIB}" "${CATALYST_FW}"
 
 # Ensure all slices have a module map for Swift import.
+copy_public_headers "${DEVICE_FW}"
+copy_public_headers "${SIMULATOR_FW}"
+copy_public_headers "${MACOS_FW}"
+copy_public_headers "${CATALYST_FW}"
 add_modulemap "${DEVICE_FW}"
 add_modulemap "${SIMULATOR_FW}"
 add_modulemap "${MACOS_FW}"
