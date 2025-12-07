@@ -67,7 +67,7 @@ add_modulemap() {
   rm -f "${framework_path}/Versions/A/Modules/Modules"
   cat > "${framework_path}/Versions/A/Modules/module.modulemap" <<'EOF'
 framework module BRFullTextSearch {
-  umbrella header "BRFullTextSearch.h"
+  umbrella header "../Headers/BRFullTextSearch.h"
   export *
   module * { export * }
 }
