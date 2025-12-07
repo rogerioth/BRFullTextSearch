@@ -38,10 +38,20 @@ build_framework_from_static_lib() {
   cp -r "${HEADERS_DIR}" "${framework_path}/Versions/A/Headers"
   cp -r "${RESOURCES_DIR}" "${framework_path}/Versions/A/Resources"
 
+  mkdir -p "${framework_path}/Versions/A/Modules"
+  cat > "${framework_path}/Versions/A/Modules/module.modulemap" <<'EOF'
+framework module BRFullTextSearch {
+  umbrella header "BRFullTextSearch.h"
+  export *
+  module * { export * }
+}
+EOF
+
   (cd "${framework_path}/Versions" && ln -sf A Current)
   (cd "${framework_path}" && ln -sf Versions/Current/BRFullTextSearch BRFullTextSearch)
   (cd "${framework_path}" && ln -sf Versions/Current/Headers Headers)
   (cd "${framework_path}" && ln -sf Versions/Current/Resources Resources)
+  (cd "${framework_path}" && ln -sf Versions/Current/Modules Modules)
 }
 
 require_path "${DEVICE_FW}" "dir"
@@ -51,8 +61,28 @@ require_path "${CATALYST_LIB}" "file"
 require_path "${HEADERS_DIR}" "dir"
 require_path "${RESOURCES_DIR}" "dir"
 
+add_modulemap() {
+  local framework_path="$1"
+  mkdir -p "${framework_path}/Versions/A/Modules"
+  rm -f "${framework_path}/Versions/A/Modules/Modules"
+  cat > "${framework_path}/Versions/A/Modules/module.modulemap" <<'EOF'
+framework module BRFullTextSearch {
+  umbrella header "BRFullTextSearch.h"
+  export *
+  module * { export * }
+}
+EOF
+  (cd "${framework_path}" && ln -sf Versions/Current/Modules Modules)
+}
+
 echo "Building Mac Catalyst framework wrapper..."
 build_framework_from_static_lib "${CATALYST_LIB}" "${CATALYST_FW}"
+
+# Ensure all slices have a module map for Swift import.
+add_modulemap "${DEVICE_FW}"
+add_modulemap "${SIMULATOR_FW}"
+add_modulemap "${MACOS_FW}"
+add_modulemap "${CATALYST_FW}"
 
 echo "Creating XCFramework at ${XCFRAMEWORK_PATH}"
 rm -rf "${XCFRAMEWORK_PATH}"
