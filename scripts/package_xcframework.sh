@@ -61,6 +61,15 @@ require_path "${CATALYST_LIB}" "file"
 require_path "${HEADERS_DIR}" "dir"
 require_path "${RESOURCES_DIR}" "dir"
 
+CLUCENE_SRC="${DEVICE_FW}/Versions/A/Headers/CLucene"
+if [[ ! -d "${CLUCENE_SRC}" && -d "${SIMULATOR_FW}/Versions/A/Headers/CLucene" ]]; then
+  CLUCENE_SRC="${SIMULATOR_FW}/Versions/A/Headers/CLucene"
+fi
+LIBSTEMMER_SRC="${DEVICE_FW}/Versions/A/Headers/libstemmer.h"
+if [[ ! -f "${LIBSTEMMER_SRC}" && -f "${SIMULATOR_FW}/Versions/A/Headers/libstemmer.h" ]]; then
+  LIBSTEMMER_SRC="${SIMULATOR_FW}/Versions/A/Headers/libstemmer.h"
+fi
+
 copy_public_headers() {
   local framework_path="$1"
   local dest="${framework_path}/Versions/A/Headers"
@@ -68,6 +77,15 @@ copy_public_headers() {
   for header in "${ROOT_DIR}/BRFullTextSearch/"*.h; do
     cp "${header}" "${dest}/"
   done
+  if [[ -d "${CLUCENE_SRC}" ]]; then
+    mkdir -p "${dest}/CLucene"
+    if [[ "${CLUCENE_SRC}" != "${dest}/CLucene" ]]; then
+      rsync -a "${CLUCENE_SRC}/" "${dest}/CLucene/"
+    fi
+  fi
+  if [[ -f "${LIBSTEMMER_SRC:-}" && ! -f "${dest}/libstemmer.h" ]]; then
+    cp "${LIBSTEMMER_SRC}" "${dest}/"
+  fi
 }
 
 add_modulemap() {
