@@ -1,5 +1,5 @@
 framework module BRFullTextSearch {
-  umbrella "../Headers"
+  umbrella header "BRFullTextSearch.h"
   export *
   module * { export * }
 }
