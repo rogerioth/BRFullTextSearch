@@ -153,6 +153,16 @@ class in that project for details.
 You can integrate BRFullTextSearch via [CocoaPods](http://cocoapods.org/), or
 manually as either a dependent project or static framework.
 
+## via Swift Package Manager (binary XCFramework)
+
+1. Build and package all slices: `./scripts/build_all.sh`
+2. The XCFramework for SPM lives at `Artifacts/BRFullTextSearch.xcframework` (the build script copies it there for git/SPM).
+3. Add the repo as a local package dependency and use the `BRFullTextSearch` binary target (see `Package.swift`).
+
+Notes:
+- The generated XCFramework is also kept at `Framework/Release/BRFullTextSearch.xcframework` (intermediate) and copied to `Artifacts/BRFullTextSearch.xcframework` for SPM.
+- The Mac Catalyst slice is currently arm64-only; the iOS simulator slice is arm64-only as well.
+
 ## via CocoaPods
 
 Install CocoaPods if not already available:
