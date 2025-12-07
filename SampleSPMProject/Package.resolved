@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/rogerioth/BRFullTextSearch.git",
       "state" : {
-        "revision" : "29063332f1f7c4a60b9f6a22ea6fcd21968aa1b7",
-        "version" : "1.0.7"
+        "revision" : "0a736156272fccc742be674d5a59e4c4910fd38b",
+        "version" : "1.0.8"
       }
     }
   ],
