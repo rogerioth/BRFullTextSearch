@@ -99,6 +99,7 @@ framework module BRFullTextSearch {
   module * { export * }
 }
 EOF
+  (cd "${framework_path}/Versions/A/Modules" && ln -sfn ../Headers/CLucene CLucene)
   (cd "${framework_path}" && ln -sf Versions/Current/Modules Modules)
 }
 

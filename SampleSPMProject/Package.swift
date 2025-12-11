@@ -7,7 +7,7 @@ let package = Package(
         .macOS(.v13)
     ],
     dependencies: [
-        .package(url: "https://github.com/rogerioth/BRFullTextSearch.git", exact: "1.0.9")
+        .package(url: "https://github.com/rogerioth/BRFullTextSearch.git", from: "1.0.9")
     ],
     targets: [
         .executableTarget(

@@ -1,222 +1,135 @@
 # BRFullTextSearch
 
-Objective-C full text search engine.
+A professional, protocol-based full-text search engine for iOS and macOS, powered by [CLucene](http://clucene.sourceforge.net/).
 
-This project provides a way to integrate full-text search capabilities into your iOS
-or OS X project. First, it provides a protocol-based API for a simple text indexing
-and search framework. Second, it provides a [CLucene](http://clucene.sourceforge.net/)
-based implementation of that framework.
+## Table of Contents
 
-# Example Usage
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Initialization](#initialization)
+  - [Indexing](#indexing)
+  - [Searching](#searching)
+  - [Predicate Queries](#predicate-queries)
+  - [Batch Operations](#batch-operations)
+- [Architecture](#architecture)
+- [License](#license)
 
-The following snippet shows how the API works. The `CLuceneSearchService` reference
-is the only CLucene-specific portion of the code:
+## Features
 
-```objc
-id<BRSearchService> service = [[CLuceneSearchService alloc] initWithIndexPath:@"/some/path"];
+- **Fast & Efficient:** C++ based backend (CLucene) wrapped in a clean Objective-C API.
+- **Protocol Oriented:** Flexible `BRSearchService` and `BRIndexable` protocols.
+- **Rich Queries:** Supports simple text search and complex `NSPredicate` queries.
+- **Batch Processing:** Optimized API for bulk indexing operations.
+- **Thread Safety:** Designed for background indexing and safe concurrency.
 
-// add a document to the index
-id<BRIndexable> doc = [[BRSimpleIndexable alloc] initWithIdentifier:@"1" data:@{
-					   kBRSearchFieldNameTitle : @"Special document",
-					   kBRSearchFieldNameValue : @"This is a long winded note with really important details in it."
-					   }];
+## Installation
+
+### Swift Package Manager
+
+BRFullTextSearch is available as a binary XCFramework via Swift Package Manager.
+
+1.  Add the package dependency to your `Package.swift` or via Xcode:
+
+    ```swift
+    dependencies: [
+        .package(url: "https://github.com/Blue-Rocket/BRFullTextSearch.git", from: "1.0.0") // Replace with latest version
+    ]
+    ```
+
+2.  Add `BRFullTextSearch` to your target's dependencies.
+
+## Usage
+
+### Initialization
+
+Initialize the `CLuceneSearchService` with a path where the index files will be stored.
+
+```objective-c
+#import <BRFullTextSearch/BRFullTextSearch.h>
+
+// Initialize the search service
+NSString *indexPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"search-index"];
+id<BRSearchService> service = [[CLuceneSearchService alloc] initWithIndexPath:indexPath];
+```
+
+### Indexing
+
+You can index any object that conforms to `BRIndexable`. The library provides `BRSimpleIndexable` for quick implementation.
+
+```objective-c
+// Create a document
+id<BRIndexable> doc = [[BRSimpleIndexable alloc] initWithIdentifier:@"unique-id-123" data:@{
+    kBRSearchFieldNameTitle : @"Project Guidelines",
+    kBRSearchFieldNameValue : @"Always adhere to the project conventions and style."
+}];
+
+// Add to index (blocking)
 NSError *error = nil;
 [service addObjectToIndexAndWait:doc error:&error];
 
-// search for documents and log contents of each result
-id<BRSearchResults> results = [service search:@"special"];
-[results iterateWithBlock:^(NSUInteger index, id<BRSearchResult>result, BOOL *stop) {
-	NSLog(@"Found result: %@", [result dictionaryRepresentation]);
+// Add to index (async)
+[service addObjectToIndex:doc queue:dispatch_get_main_queue() finished:^(NSError *error) {
+    if (!error) {
+        NSLog(@"Indexing complete.");
+    }
 }];
 ```
 
+### Searching
 
-# Sample projects
+Perform simple text searches to retrieve matching documents.
 
-There are some sample projects included in the source distribution:
+```objective-c
+// Search for "guidelines"
+id<BRSearchResults> results = [service search:@"guidelines"];
 
- * [SampleCocoaPodsProject](SampleCocoaPodsProject/) - a Core Data based iOS application using CocoaPods integration
- * [SampleOSXCocoaPodsProject](SampleOSXCocoaPodsProject/) - a Core Data based OS X application using CocoaPods integration
-
-# Predicate queries
-
-The `BRSearchService` API supports `NSPredicate` based queries:
-
-```objc
-- (id<BRSearchResults>)searchWithPredicate:(NSPredicate *)predicate
-                                    sortBy:(NSString *)sortFieldName
-                                  sortType:(BRSearchSortType)sortType
-                                 ascending:(BOOL)ascending;
+[results iterateWithBlock:^(NSUInteger index, id<BRSearchResult> result, BOOL *stop) {
+    NSLog(@"Match found: %@", [result dictionaryRepresentation]);
+}];
 ```
 
-This method of querying can be quite useful when constructing a query out of user-supplied query text.
-For example, you could support _prefix_ based queries (for example, searching for `ca*` to match `cat`):
+### Predicate Queries
 
-```objc
-// get query as string, from text field for Example
-NSString * query = ...;
+For more advanced control, use `NSPredicate`. This supports prefix matching, specific fields, and compound logic.
 
-static NSExpression *ValueExpression;
-if ( ValueExpression == nil ) {
-    ValueExpression = [NSExpression expressionForKeyPath:kBRSearchFieldNameValue];
-}
-NSArray *tokens = [[query stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
-                   componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-NSMutableArray *predicates = [NSMutableArray arrayWithCapacity:([tokens count] * 2)];
-for ( NSString *token in tokens ) {
-    [predicates addObject:[NSComparisonPredicate predicateWithLeftExpression:ValueExpression
-                                                             rightExpression:[NSExpression expressionForConstantValue:token]
-                                                                    modifier:NSDirectPredicateModifier
-                                                                        type:NSLikePredicateOperatorType
-                                                                     options:0]];
-    [predicates addObject:[NSComparisonPredicate predicateWithLeftExpression:ValueExpression
-                                                             rightExpression:[NSExpression expressionForConstantValue:token]
-                                                                    modifier:NSDirectPredicateModifier
-                                                                        type:NSBeginsWithPredicateOperatorType
-                                                                     options:0]];
-}
-NSPredicate *predicateQuery = [NSCompoundPredicate orPredicateWithSubpredicates:predicates];
-searchResults = [searchService searchWithPredicate:predicateQuery sortBy:nil sortType:0 ascending:NO];
+```objective-c
+// Search for titles matching "Project*" (prefix search)
+NSPredicate *predicate = [NSPredicate predicateWithFormat:@"title BEGINSWITH %@", @"Project"];
+
+id<BRSearchResults> results = [service searchWithPredicate:predicate
+                                                    sortBy:kBRSearchFieldNameTitle
+                                                  sortType:BRSearchSortTypeString
+                                                 ascending:YES];
 ```
 
-# Batch API
+### Batch Operations
 
-When indexing many documents at once, `BRSearchService` provides a set of methods specifically designed
-for efficient bulk operations:
+For high performance when indexing many items, use the batch API to minimize I/O overhead.
 
-```objc
-// bulk block callback function.
-typedef void (^BRSearchServiceIndexUpdateBlock)(id <BRIndexUpdateContext> updateContext);
-
-// perform a bulk operation, calling the passed on block
-- (void)bulkUpdateIndex:(BRSearchServiceIndexUpdateBlock)updateBlock
-                  queue:(dispatch_queue_t)finishedQueue
-               finished:(BRSearchServiceUpdateCallbackBlock)finished;
-
-// from within the block, the following methods can be used (notice the updateContext parameter):
-
-- (void)addObjectToIndex:(id <BRIndexable> )object context:(id <BRIndexUpdateContext> )updateContext;
-
-- (int)removeObjectFromIndex:(BRSearchObjectType)type withIdentifier:(NSString *)identifier
-                     context:(id <BRIndexUpdateContext> )updateContext;
-
-- (int)removeObjectsFromIndexMatchingPredicate:(NSPredicate *)predicate
-                                       context:(id <BRIndexUpdateContext> )updateContext;
-
-- (int)removeAllObjectsFromIndex:(id <BRIndexUpdateContext> )updateContext;
-```
-
-Here's an example of a bulk operation that adds 100,000 documents to the index; notice the strategic
-use of `@autoreleasepool` to keep a lid on memory use during the operation:
-
-```objc
-id<BRSearchService> service = ...;
+```objective-c
 [service bulkUpdateIndex:^(id<BRIndexUpdateContext> updateContext) {
-
-    if ( [updateContext respondsToSelector:@selector(setOptimizeWhenDone:)] ) {
+    // Optional: Optimize index after update
+    if ([updateContext respondsToSelector:@selector(setOptimizeWhenDone:)]) {
         updateContext.optimizeWhenDone = YES;
     }
 
-    // add a bunch of documents to the index, in small autorelease batches
-    for ( int i = 0; i < 100000; i+= 1000 ) {
-        @autoreleasepool {
-            for ( int j = 0; j < 1000; j++ ) {
-                id<BRIndexable> doc = ...;
-                [service addObjectToIndex:doc context:updateContext];
-            }
-        }
+    // Add multiple objects
+    for (id<BRIndexable> doc in myDocuments) {
+        [service addObjectToIndex:doc context:updateContext];
     }
-
 } queue:dispatch_get_main_queue() finished:^(int updateCount, NSError *error) {
-    // all finished here
+    NSLog(@"Batch update finished: %d items", updateCount);
 }];
 ```
 
-# Core Data support
+## Architecture
 
-It's pretty easy to integrate BRFullTextSearch with Core Data, to maintain a search
-index while changes are persisted in Core Data. One way is to listen for the
-`NSManagedObjectContextDidSaveNotification` notification and process Core Data
-changes as index delete and update operations. The **SampleCocoaPodsProject** iOS project
-contains an example of this integration. The app allows you to create small _sticky
-notes_ and search the text of those notes. See the
-[CoreDataManager](SampleCocoaPodsProject/SampleCocoaPodsProject/CoreDataManager.m) class in the sample
-project, whose `maintainSearchIndexFromManagedObjectDidSave:` method handles this.
+*   **`BRSearchService`**: The primary protocol defining the search API.
+*   **`CLuceneSearchService`**: The concrete implementation using CLucene.
+*   **`BRIndexable`**: Protocol for objects that can be indexed.
+*   **`BRSimpleIndexable`**: A concrete, dictionary-backed implementation of `BRIndexable`.
 
-The **SampleOSXCocoaPodsProject** OS X project also contains an example of this integration.
-See the [CoreDataManager](SampleOSXCocoaPodsProject/SampleOSXCocoaPodsProject/CoreDataManager.m)
-class in that project for details.
+## License
 
-
-# Project Integration
-
-You can integrate BRFullTextSearch via [CocoaPods](http://cocoapods.org/), or
-manually as either a dependent project or static framework.
-
-## via Swift Package Manager (binary XCFramework)
-
-1. Build and package all slices: `./scripts/build_all.sh`
-2. The XCFramework for SPM lives at `Artifacts/BRFullTextSearch.xcframework` (the build script copies it there for git/SPM).
-3. Add the repo as a local package dependency and use the `BRFullTextSearch` binary target (see `Package.swift`).
-
-Notes:
-- The generated XCFramework is also kept at `Framework/Release/BRFullTextSearch.xcframework` (intermediate) and copied to `Artifacts/BRFullTextSearch.xcframework` for SPM.
-- The Mac Catalyst slice is currently arm64-only; the iOS simulator slice is arm64-only as well.
-
-## via CocoaPods
-
-Install CocoaPods if not already available:
-
-```bash
-$ [sudo] gem install cocoapods
-$ pod setup
-```
-
-Change to the directory of your Xcode project, and create a file named `Podfile` with
-contents similar to this:
-
-	platform :ios, '5.0'
-	pod 'BRFullTextSearch', '~> 2.0'
-
-Install into your project:
-
-``` bash
-$ pod install
-```
-
-Open your project in Xcode using the **.xcworkspace** file CocoaPods generated.
-
-**Note:** the `use_frameworks!` option is not supported, see #4. Any pull requests
-to allow for building as a dynamic framework are very welcome!
-
-## via static framework
-
-Using this approach you'll build a static library framework that you can manually
-integrate into your own project.
-
-The BRFullTextSearch Xcode project includes a target called
-**BRFullTextSearch.framework** that builds a static library framework. Build that
-target, which will produce a `Framework/Release/BRFullTextSearch.framework` bundle at
-the root project directory. Copy that framework into your project and add it as a
-build dependency.
-
-You must also add the following linker build dependencies, which you can do by
-clicking the **+** button in the **Link Binary With Libraries** section of the
-**Build Phases** tab in the project settings:
-
- * libz
- * libc++
-
-Next, add `-ObjC` as an *Other Linker Flags* build setting. If you do not have any
-C++ sources in your project, you probably also need to add `-stdlib=libc++` to
-this setting as well.
-
-Finally, you'll need to add the path to the directory containing the
-`BRFullTextSearch.framework` bundle as a **Framework Search Paths** value in the
-**Build Settings** tab of the project settings.
-
-The **SampleStaticLibraryProject** included in this repository is an example project
-set up using the static library framework integration approach. You must build
-**BRFullTextSearch.framework** first, then open this project. When you run the
-project, it will index a set of documents using some Latin text. You can then search
-for latin words using a simple UI.
+This project is distributable under the terms of the Apache License, Version 2.0.
