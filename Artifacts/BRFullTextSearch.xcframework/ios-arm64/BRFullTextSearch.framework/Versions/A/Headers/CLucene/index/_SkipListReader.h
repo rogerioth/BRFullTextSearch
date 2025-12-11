@@ -7,8 +7,8 @@
 #ifndef _lucene_index_SkipListReader_
 #define _lucene_index_SkipListReader_
 
-#include "CLucene/store/IndexInput.h"
-#include "CLucene/util/Array.h"
+#include <BRFullTextSearch/CLucene/store/IndexInput.h>
+#include <BRFullTextSearch/CLucene/util/Array.h>
 
 CL_NS_DEF(index)
 

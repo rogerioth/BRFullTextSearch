@@ -8,7 +8,7 @@
 #define _lucene_analysis_CachingTokenFilter
 
 #include <list>
-#include "CLucene/analysis/AnalysisHeader.h"
+#include <BRFullTextSearch/CLucene/analysis/AnalysisHeader.h>
 
 CL_NS_DEF(analysis)
 

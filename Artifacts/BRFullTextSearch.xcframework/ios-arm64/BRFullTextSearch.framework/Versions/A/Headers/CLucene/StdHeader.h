@@ -14,13 +14,13 @@
 */
 
 //configurations for library
-#include "CLucene/CLConfig.h"
+#include <BRFullTextSearch/CLucene/CLConfig.h>
 
 //shared header
-#include "CLucene/SharedHeader.h"
+#include <BRFullTextSearch/CLucene/SharedHeader.h>
 
 //error handling macros/functions
-#include "CLucene/debug/error.h"
+#include <BRFullTextSearch/CLucene/debug/error.h>
 
 //todo: would be good to deprecate this... it's ugly
 #define StringArrayWithDeletor       CL_NS(util)::CLVector<TCHAR*, CL_NS(util)::Deletor::tcArray >

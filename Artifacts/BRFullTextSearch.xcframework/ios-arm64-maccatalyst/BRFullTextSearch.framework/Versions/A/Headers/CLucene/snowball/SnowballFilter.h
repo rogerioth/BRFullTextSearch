@@ -7,7 +7,7 @@
 #ifndef _lucene_analysis_snowball_filter_
 #define _lucene_analysis_snowball_filter_
 
-#include "CLucene/analysis/AnalysisHeader.h"
+#include <BRFullTextSearch/CLucene/analysis/AnalysisHeader.h>
 #include "libstemmer.h"
 
 CL_NS_DEF2(analysis,snowball)

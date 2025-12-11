@@ -8,9 +8,9 @@
 #define _lucene_search_Query_h
 
 
-#include "CLucene/util/Array.h"
-#include "CLucene/index/Term.h"
-#include "CLucene/util/Equators.h"
+#include <BRFullTextSearch/CLucene/util/Array.h>
+#include <BRFullTextSearch/CLucene/index/Term.h>
+#include <BRFullTextSearch/CLucene/util/Equators.h>
 
 CL_CLASS_DEF(index,IndexReader)
 

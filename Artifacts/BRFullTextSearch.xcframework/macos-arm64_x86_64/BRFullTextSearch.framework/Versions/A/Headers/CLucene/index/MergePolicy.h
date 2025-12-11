@@ -7,7 +7,7 @@
 #ifndef _lucene_index_MergePolicy_
 #define _lucene_index_MergePolicy_
 
-#include "CLucene/util/VoidList.h"
+#include <BRFullTextSearch/CLucene/util/VoidList.h>
 CL_CLASS_DEF(store,Directory)
 CL_NS_DEF(index)
 

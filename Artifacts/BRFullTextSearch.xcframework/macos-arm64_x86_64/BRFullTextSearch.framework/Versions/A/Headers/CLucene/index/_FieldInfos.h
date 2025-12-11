@@ -7,7 +7,7 @@
 #ifndef _lucene_index_FieldInfos_
 #define _lucene_index_FieldInfos_
 
-#include "CLucene/store/Directory.h"
+#include <BRFullTextSearch/CLucene/store/Directory.h>
 
 CL_CLASS_DEF(document,Document)
 CL_CLASS_DEF(document,Field)

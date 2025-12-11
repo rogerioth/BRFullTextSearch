@@ -9,7 +9,7 @@
 
 
 CL_CLASS_DEF(store,Directory)
-#include "CLucene/store/_RAMDirectory.h"
+#include <BRFullTextSearch/CLucene/store/_RAMDirectory.h>
 #include "_SegmentMergeInfo.h"
 #include "_SegmentMergeQueue.h"
 #include "IndexReader.h"

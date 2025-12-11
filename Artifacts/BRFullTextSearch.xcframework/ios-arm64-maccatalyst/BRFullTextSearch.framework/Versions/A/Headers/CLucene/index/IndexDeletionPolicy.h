@@ -8,7 +8,7 @@
 #define _lucene_index_IndexDeletionPolicy_
 
 #include <vector>
-#include "CLucene/util/Equators.h"
+#include <BRFullTextSearch/CLucene/util/Equators.h>
 
 CL_NS_DEF(index)
 

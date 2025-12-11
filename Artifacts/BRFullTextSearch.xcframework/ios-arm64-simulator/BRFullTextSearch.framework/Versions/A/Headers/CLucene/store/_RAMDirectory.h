@@ -13,8 +13,8 @@
 #include "RAMDirectory.h"
 //#include "Lock.h"
 //#include "Directory.h"
-//#include "CLucene/util/VoidMap.h"
-//#include "CLucene/util/Arrays.h"
+//#include <BRFullTextSearch/CLucene/util/VoidMap.h>
+//#include <BRFullTextSearch/CLucene/util/Arrays.h>
 
 CL_NS_DEF(store)
 

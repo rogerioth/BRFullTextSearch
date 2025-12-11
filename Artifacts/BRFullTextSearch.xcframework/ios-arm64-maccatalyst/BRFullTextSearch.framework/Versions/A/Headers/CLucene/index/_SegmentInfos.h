@@ -9,7 +9,7 @@
 
 
 //#include "IndexReader.h"
-#include "CLucene/util/Misc.h"
+#include <BRFullTextSearch/CLucene/util/Misc.h>
 #include "_IndexFileNames.h"
 CL_CLASS_DEF(store,Directory)
 CL_CLASS_DEF(store,IndexInput)

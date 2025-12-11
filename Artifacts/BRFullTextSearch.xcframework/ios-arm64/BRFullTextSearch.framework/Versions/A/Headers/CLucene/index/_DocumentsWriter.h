@@ -7,10 +7,10 @@
 #ifndef _lucene_index_DocumentsWriter_
 #define _lucene_index_DocumentsWriter_
 
-#include "CLucene/store/IndexInput.h"
-#include "CLucene/config/_threads.h"
-#include "CLucene/util/Array.h"
-#include "CLucene/store/_RAMDirectory.h"
+#include <BRFullTextSearch/CLucene/store/IndexInput.h>
+#include <BRFullTextSearch/CLucene/config/_threads.h>
+#include <BRFullTextSearch/CLucene/util/Array.h>
+#include <BRFullTextSearch/CLucene/store/_RAMDirectory.h>
 #include "_TermInfo.h"
 
 CL_CLASS_DEF(analysis,Analyzer)

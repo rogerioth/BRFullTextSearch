@@ -7,7 +7,7 @@
 #ifndef _lucene_search_spans_SpanScorer_
 #define _lucene_search_spans_SpanScorer_
 
-#include "CLucene/search/Scorer.h"
+#include <BRFullTextSearch/CLucene/search/Scorer.h>
 CL_CLASS_DEF2(search,spans,Spans)
 CL_CLASS_DEF(search,Explanation)
 CL_CLASS_DEF(search,Weight)

@@ -7,7 +7,7 @@
 #ifndef _lucene_index_IndexFileDeleter_
 #define _lucene_index_IndexFileDeleter_
 
-#include "CLucene/util/Equators.h"
+#include <BRFullTextSearch/CLucene/util/Equators.h>
 #include "IndexDeletionPolicy.h"
 
 CL_CLASS_DEF(store,Directory)

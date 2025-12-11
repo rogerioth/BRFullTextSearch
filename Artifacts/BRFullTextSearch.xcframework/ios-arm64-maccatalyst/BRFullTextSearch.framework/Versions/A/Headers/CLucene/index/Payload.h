@@ -7,7 +7,7 @@
 #ifndef _lucene_index_Payload_
 #define _lucene_index_Payload_
 
-#include "CLucene/util/Array.h"
+#include <BRFullTextSearch/CLucene/util/Array.h>
 
 CL_NS_DEF(index)
 

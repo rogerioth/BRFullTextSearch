@@ -8,7 +8,7 @@
 #define _lucene_index_MultipleTermPositions_
 
 #include "Terms.h"
-#include "CLucene/util/Array.h"
+#include <BRFullTextSearch/CLucene/util/Array.h>
 
 CL_NS_DEF(index)
 

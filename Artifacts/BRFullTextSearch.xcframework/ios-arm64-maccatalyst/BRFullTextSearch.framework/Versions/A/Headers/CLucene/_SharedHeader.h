@@ -9,8 +9,8 @@
 
 #define LUCENE_INT32_MAX_SHOULDBE 0x7FFFFFFFL
 
-#include "CLucene/_clucene-config.h"
-#include "CLucene/SharedHeader.h"
+#include <BRFullTextSearch/CLucene/_clucene-config.h>
+#include <BRFullTextSearch/CLucene/SharedHeader.h>
 
 //don't show deprecated warnings while building internally...
 #undef _CL_DEPRECATE_TEXT
@@ -24,11 +24,11 @@
 #include <stdlib.h>
 
 //we always need this stuff....
-#include "CLucene/debug/_condition.h"
-#include "CLucene/LuceneThreads.h"
-#include "CLucene/config/repl_tchar.h"
-#include "CLucene/config/repl_wchar.h"
-#include "CLucene/config/repl_wctype.h" //replacements for functions
+#include <BRFullTextSearch/CLucene/debug/_condition.h>
+#include <BRFullTextSearch/CLucene/LuceneThreads.h>
+#include <BRFullTextSearch/CLucene/config/repl_tchar.h>
+#include <BRFullTextSearch/CLucene/config/repl_wchar.h>
+#include <BRFullTextSearch/CLucene/config/repl_wctype.h> //replacements for functions
 
 #define cl_min(a,b) ((a)>(b) ? (b) : (a))
 #define cl_min3(a,b,c) ((a)<(b) ? ((a)<(c) ? (a) : (c)) : ((b)<(c) ? (b) : (c)))

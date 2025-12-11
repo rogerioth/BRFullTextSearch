@@ -7,8 +7,8 @@
 #ifndef _lucene_store_IndexInput_
 #define _lucene_store_IndexInput_
 
-#include "CLucene/LuceneThreads.h"
-#include "CLucene/util/Equators.h"
+#include <BRFullTextSearch/CLucene/LuceneThreads.h>
+#include <BRFullTextSearch/CLucene/util/Equators.h>
 
 CL_NS_DEF(store)
 

@@ -7,8 +7,8 @@
 #ifndef _lucene_search_spans_SpanWeight_
 #define _lucene_search_spans_SpanWeight_
 
-#include "CLucene/search/SearchHeader.h"
-#include "CLucene/search/Query.h"
+#include <BRFullTextSearch/CLucene/search/SearchHeader.h>
+#include <BRFullTextSearch/CLucene/search/Query.h>
 CL_CLASS_DEF2(search,spans,SpanQuery)
 CL_CLASS_DEF(search,Similarity)
 CL_CLASS_DEF(search,Searcher)

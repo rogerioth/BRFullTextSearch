@@ -12,9 +12,9 @@ CL_CLASS_DEF(search,FieldDoc)
 CL_CLASS_DEF(search,SortComparatorSource)
 CL_CLASS_DEF(search,SortField)
 #include "FieldDoc.h" //required to expose destructor
-#include "CLucene/util/PriorityQueue.h"
-#include "CLucene/util/Equators.h"
-#include "CLucene/LuceneThreads.h"
+#include <BRFullTextSearch/CLucene/util/PriorityQueue.h>
+#include <BRFullTextSearch/CLucene/util/Equators.h>
+#include <BRFullTextSearch/CLucene/LuceneThreads.h>
 
 CL_CLASS_DEF(index,IndexReader)
 

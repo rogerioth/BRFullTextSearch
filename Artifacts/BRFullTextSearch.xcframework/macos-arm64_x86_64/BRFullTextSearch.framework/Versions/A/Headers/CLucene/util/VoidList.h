@@ -8,7 +8,7 @@
 #define _lucene_util_VoidList_
 
 #include "Equators.h"
-#include "CLucene/LuceneThreads.h"
+#include <BRFullTextSearch/CLucene/LuceneThreads.h>
 
 CL_NS_DEF(util)
 

@@ -7,7 +7,7 @@
 #ifndef _lucene_util_Reader_
 #define _lucene_util_Reader_
 
-#include "CLucene/util/CLStreams.h"
+#include <BRFullTextSearch/CLucene/util/CLStreams.h>
 CL_NS_DEF(util)
 
 #error Reader has been refactored. It is recommended that you use strigi streams

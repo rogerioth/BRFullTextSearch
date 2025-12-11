@@ -7,7 +7,7 @@
 #ifndef _lucene_search_PhrasePositions_
 #define _lucene_search_PhrasePositions_
 
-#include "CLucene/index/Terms.h"
+#include <BRFullTextSearch/CLucene/index/Terms.h>
 
 CL_NS_DEF(search)
 

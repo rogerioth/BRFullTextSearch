@@ -8,7 +8,7 @@
 #define _lucene_search_PhraseQueue_
 
 
-#include "CLucene/util/PriorityQueue.h"
+#include <BRFullTextSearch/CLucene/util/PriorityQueue.h>
 #include "_PhrasePositions.h"
 
 CL_NS_DEF(search)

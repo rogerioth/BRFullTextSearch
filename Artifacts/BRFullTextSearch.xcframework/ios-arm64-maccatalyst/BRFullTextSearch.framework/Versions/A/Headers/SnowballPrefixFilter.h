@@ -9,8 +9,13 @@
 #ifndef __BRFullTextSearch__SnowballPrefixFilter__
 #define __BRFullTextSearch__SnowballPrefixFilter__
 
+#if defined(COCOAPODS)
 #include "CLucene/analysis/AnalysisHeader.h"
 #include "CLucene/snowball/SnowballFilter.h"
+#else
+#include <BRFullTextSearch/CLucene/analysis/AnalysisHeader.h>
+#include <BRFullTextSearch/CLucene/snowball/SnowballFilter.h>
+#endif
 
 using namespace lucene::analysis;
 using namespace lucene::analysis::snowball;

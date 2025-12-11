@@ -88,6 +88,17 @@ copy_public_headers() {
   fi
 }
 
+patch_headers() {
+  local framework_path="$1"
+  local dest="${framework_path}/Versions/A/Headers"
+  
+  echo "Patching headers in ${dest}..."
+  # Replace #include "CLucene/..." with #include <BRFullTextSearch/CLucene/...> in all headers
+  if [[ -d "${dest}/CLucene" ]]; then
+    find "${dest}/CLucene" -name "*.h" -print0 | xargs -0 sed -i '' 's|#include "CLucene/\(.*\)"|#include <BRFullTextSearch/CLucene/\1>|g'
+  fi
+}
+
 add_modulemap() {
   local framework_path="$1"
   mkdir -p "${framework_path}/Versions/A/Modules"
@@ -99,7 +110,7 @@ framework module BRFullTextSearch {
   module * { export * }
 }
 EOF
-  (cd "${framework_path}/Versions/A/Modules" && ln -sfn ../Headers/CLucene CLucene)
+  # (cd "${framework_path}/Versions/A/Modules" && ln -sfn ../Headers/CLucene CLucene) # This symlink might be causing issues or is unnecessary if we use <BRFullTextSearch/...>
   (cd "${framework_path}" && ln -sf Versions/Current/Modules Modules)
 }
 
@@ -111,6 +122,12 @@ copy_public_headers "${DEVICE_FW}"
 copy_public_headers "${SIMULATOR_FW}"
 copy_public_headers "${MACOS_FW}"
 copy_public_headers "${CATALYST_FW}"
+
+patch_headers "${DEVICE_FW}"
+patch_headers "${SIMULATOR_FW}"
+patch_headers "${MACOS_FW}"
+patch_headers "${CATALYST_FW}"
+
 add_modulemap "${DEVICE_FW}"
 add_modulemap "${SIMULATOR_FW}"
 add_modulemap "${MACOS_FW}"

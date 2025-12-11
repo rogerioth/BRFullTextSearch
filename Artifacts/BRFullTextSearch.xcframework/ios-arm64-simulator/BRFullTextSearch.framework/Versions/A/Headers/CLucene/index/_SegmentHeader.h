@@ -8,11 +8,11 @@
 #define _lucene_index_SegmentHeader_
 
 #include "_SegmentInfos.h"
-#include "CLucene/util/BitSet.h"
-//#include "CLucene/util/VoidMap.h"
-#include "CLucene/store/IndexInput.h"
-#include "CLucene/store/IndexOutput.h"
-#include "CLucene/index/IndexReader.h"
+#include <BRFullTextSearch/CLucene/util/BitSet.h>
+//#include <BRFullTextSearch/CLucene/util/VoidMap.h>
+#include <BRFullTextSearch/CLucene/store/IndexInput.h>
+#include <BRFullTextSearch/CLucene/store/IndexOutput.h>
+#include <BRFullTextSearch/CLucene/index/IndexReader.h>
 #include "Term.h"
 #include "Terms.h"
 #include "_TermInfo.h"
@@ -24,7 +24,7 @@
 #include "_CompoundFile.h"
 #include "DirectoryIndexReader.h"
 #include "_SkipListReader.h"
-#include "CLucene/util/_ThreadLocal.h"
+#include <BRFullTextSearch/CLucene/util/_ThreadLocal.h>
 
 CL_NS_DEF(index)
 class SegmentReader;

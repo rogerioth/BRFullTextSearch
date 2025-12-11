@@ -7,7 +7,7 @@
 #ifndef _lucene_search_spans_TermSpans_
 #define _lucene_search_spans_TermSpans_
 
-#include "CLucene/search/spans/Spans.h"
+#include <BRFullTextSearch/CLucene/search/spans/Spans.h>
 CL_CLASS_DEF(index, TermPositions)
 CL_CLASS_DEF(index, Term)
 

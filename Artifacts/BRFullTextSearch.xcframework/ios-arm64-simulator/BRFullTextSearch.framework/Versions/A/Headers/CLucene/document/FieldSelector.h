@@ -7,9 +7,9 @@
 #ifndef _lucene_document_FieldSelector_
 #define _lucene_document_FieldSelector_
 
-#include "CLucene/util/Equators.h"
-#include "CLucene/util/Array.h"
-#include "CLucene/util/VoidMap.h"
+#include <BRFullTextSearch/CLucene/util/Equators.h>
+#include <BRFullTextSearch/CLucene/util/Array.h>
+#include <BRFullTextSearch/CLucene/util/VoidMap.h>
 
 CL_NS_DEF(document)
 

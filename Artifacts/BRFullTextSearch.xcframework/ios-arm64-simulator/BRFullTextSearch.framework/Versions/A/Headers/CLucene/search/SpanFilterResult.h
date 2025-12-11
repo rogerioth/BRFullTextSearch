@@ -7,8 +7,8 @@
 #ifndef _lucene_search_SpanFilterResult_
 #define _lucene_search_SpanFilterResult_
 
-#include "CLucene/util/BitSet.h"
-#include "CLucene/util/VoidList.h"
+#include <BRFullTextSearch/CLucene/util/BitSet.h>
+#include <BRFullTextSearch/CLucene/util/VoidList.h>
 
 CL_NS_DEF(search)
 

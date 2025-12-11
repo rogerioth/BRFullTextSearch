@@ -7,10 +7,10 @@
 #ifndef _lucene_index_FieldsReader_
 #define _lucene_index_FieldsReader_
 
-#include "CLucene/util/_ThreadLocal.h"
+#include <BRFullTextSearch/CLucene/util/_ThreadLocal.h>
 CL_CLASS_DEF(store,Directory)
 CL_CLASS_DEF(document,Document)
-#include "CLucene/document/Field.h"
+#include <BRFullTextSearch/CLucene/document/Field.h>
 CL_CLASS_DEF(document,FieldSelector)
 CL_CLASS_DEF(index, FieldInfo)
 CL_CLASS_DEF(index, FieldInfos)

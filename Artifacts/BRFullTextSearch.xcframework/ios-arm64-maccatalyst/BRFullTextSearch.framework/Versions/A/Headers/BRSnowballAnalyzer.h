@@ -9,7 +9,11 @@
 #ifndef __BRFullTextSearch__BRSnowballAnalyzer__
 #define __BRFullTextSearch__BRSnowballAnalyzer__
 
+#if defined(COCOAPODS)
 #include "CLucene/analysis/AnalysisHeader.h"
+#else
+#include <BRFullTextSearch/CLucene/analysis/AnalysisHeader.h>
+#endif
 
 CL_CLASS_DEF(util,BufferedReader)
 CL_NS_DEF2(analysis,snowball)

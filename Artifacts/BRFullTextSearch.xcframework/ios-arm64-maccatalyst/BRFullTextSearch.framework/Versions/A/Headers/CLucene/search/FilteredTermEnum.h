@@ -9,7 +9,7 @@
 
 
 CL_CLASS_DEF(index,Term)
-#include "CLucene/index/Terms.h"
+#include <BRFullTextSearch/CLucene/index/Terms.h>
 
 CL_NS_DEF(search)
 /** Abstract class for enumerating a subset of all terms. 

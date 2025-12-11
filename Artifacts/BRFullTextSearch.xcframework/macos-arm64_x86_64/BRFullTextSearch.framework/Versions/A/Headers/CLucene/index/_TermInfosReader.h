@@ -12,7 +12,7 @@
 #include "_SegmentTermEnum.h"
 CL_CLASS_DEF(store,Directory)
 //CL_CLASS_DEF(store,IndexInput)
-#include "CLucene/util/_ThreadLocal.h"
+#include <BRFullTextSearch/CLucene/util/_ThreadLocal.h>
 //#include "FieldInfos.h"
 //#include "TermInfo.h"
 //#include "TermInfosWriter.h"

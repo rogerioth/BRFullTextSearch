@@ -8,7 +8,7 @@
 #define _lucene_util_VoidMap_
 
 #include "Equators.h"
-#include "CLucene/LuceneThreads.h"
+#include <BRFullTextSearch/CLucene/LuceneThreads.h>
 
 #if defined(_CL_HAVE_TR1_UNORDERED_MAP) && defined(_CL_HAVE_TR1_UNORDERED_SET)
 #if defined(_LIBCPP_VERSION)

@@ -11,7 +11,7 @@ CL_CLASS_DEF(util,StringBuffer)
 CL_CLASS_DEF(search,Weight)
 #include "Query.h"
 #include "BooleanClause.h"
-#include "CLucene/util/VoidList.h"
+#include <BRFullTextSearch/CLucene/util/VoidList.h>
 
 CL_NS_DEF(search)
 

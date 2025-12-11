@@ -9,8 +9,8 @@
 
 
 CL_CLASS_DEF(store,Lock)
-#include "CLucene/store/Directory.h"
-#include "CLucene/store/IndexInput.h"
+#include <BRFullTextSearch/CLucene/store/Directory.h>
+#include <BRFullTextSearch/CLucene/store/IndexInput.h>
 #include "_SegmentMerger.h"
 
 CL_NS_DEF(index)

@@ -9,7 +9,7 @@
 
 
 //#include "FieldInfos.h"
-#include "CLucene/util/Array.h"
+#include <BRFullTextSearch/CLucene/util/Array.h>
 
 CL_NS_DEF(index)
 

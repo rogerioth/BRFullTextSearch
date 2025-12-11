@@ -12,7 +12,7 @@
 #include <set>
 #include <vector>
 #include <stdlib.h>
-//#include "CLucene/LuceneThreads.h"
+//#include <BRFullTextSearch/CLucene/LuceneThreads.h>
 
 CL_NS_DEF(util)
 

@@ -12,12 +12,12 @@
 * We include the shared code header and the public StdHeader.h header.
 */
 
-#include "CLucene/StdHeader.h"
-#include "CLucene/_SharedHeader.h"
+#include <BRFullTextSearch/CLucene/StdHeader.h>
+#include <BRFullTextSearch/CLucene/_SharedHeader.h>
 
 //todo: this code needs to go to shared
-#include "CLucene/util/_VoidMap.h"
-#include "CLucene/util/_VoidList.h"
+#include <BRFullTextSearch/CLucene/util/_VoidMap.h>
+#include <BRFullTextSearch/CLucene/util/_VoidList.h>
 
 using namespace std;
 

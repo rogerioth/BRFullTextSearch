@@ -8,7 +8,7 @@
 #define _lucene_analysis_standard_StandardFilter
 
 
-#include "CLucene/analysis/AnalysisHeader.h"
+#include <BRFullTextSearch/CLucene/analysis/AnalysisHeader.h>
 //#include "../Analyzers.h"
 //#include "StandardTokenizerConstants.h"
 

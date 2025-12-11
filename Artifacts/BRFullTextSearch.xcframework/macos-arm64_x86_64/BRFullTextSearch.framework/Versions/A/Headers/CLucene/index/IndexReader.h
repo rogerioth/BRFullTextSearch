@@ -8,9 +8,9 @@
 #define _lucene_index_IndexReader_
 
 
-#include "CLucene/util/Array.h"
-#include "CLucene/util/VoidList.h"
-#include "CLucene/LuceneThreads.h"
+#include <BRFullTextSearch/CLucene/util/Array.h>
+#include <BRFullTextSearch/CLucene/util/VoidList.h>
+#include <BRFullTextSearch/CLucene/LuceneThreads.h>
 
 CL_CLASS_DEF(store,Directory)
 CL_CLASS_DEF(store,LuceneLock)

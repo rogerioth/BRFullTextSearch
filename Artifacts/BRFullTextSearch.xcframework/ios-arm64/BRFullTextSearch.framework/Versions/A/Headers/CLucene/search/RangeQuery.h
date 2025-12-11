@@ -13,7 +13,7 @@
 #include "Query.h"
 
 CL_CLASS_DEF(index,Term)
-//#include "CLucene/index/Terms.h"
+//#include <BRFullTextSearch/CLucene/index/Terms.h>
 
 CL_CLASS_DEF(util,StringBuffer)
 

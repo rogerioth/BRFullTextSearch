@@ -10,8 +10,8 @@
 #include "Query.h"
 CL_CLASS_DEF(index,Term)
 CL_CLASS_DEF(search,Scorer)
-#include "CLucene/util/Array.h"
-#include "CLucene/util/VoidList.h"
+#include <BRFullTextSearch/CLucene/util/Array.h>
+#include <BRFullTextSearch/CLucene/util/VoidList.h>
 
 CL_NS_DEF(search)
 	/** A Query that matches documents containing a particular sequence of terms.

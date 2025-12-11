@@ -8,7 +8,7 @@
 #define _lucene_analysis_standard_StandardAnalyzer
 
 CL_CLASS_DEF(util,BufferedReader)
-#include "CLucene/analysis/AnalysisHeader.h"
+#include <BRFullTextSearch/CLucene/analysis/AnalysisHeader.h>
 
 CL_NS_DEF2(analysis,standard)
 

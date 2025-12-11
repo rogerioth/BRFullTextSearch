@@ -7,7 +7,7 @@
 #ifndef _lucene_index_internal_termvector_h
 #define _lucene_index_internal_termvector_h
 
-#include "CLucene/util/Array.h"
+#include <BRFullTextSearch/CLucene/util/Array.h>
 #include "_FieldInfos.h"
 #include "TermVector.h"
 //#include "FieldInfos.h"

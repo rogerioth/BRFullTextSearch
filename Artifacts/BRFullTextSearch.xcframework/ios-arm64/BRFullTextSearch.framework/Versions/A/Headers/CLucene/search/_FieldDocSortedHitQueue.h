@@ -10,7 +10,7 @@
 
 #include "Sort.h"
 #include "FieldDoc.h"
-#include "CLucene/util/PriorityQueue.h"
+#include <BRFullTextSearch/CLucene/util/PriorityQueue.h>
 
 CL_NS_DEF(search)
 

@@ -8,7 +8,7 @@
 #define _lucene_queryParser_MultiFieldQueryParser_
 
 #include "QueryParser.h"
-#include "CLucene/util/VoidMap.h"
+#include <BRFullTextSearch/CLucene/util/VoidMap.h>
 
 
 CL_NS_DEF(queryParser)

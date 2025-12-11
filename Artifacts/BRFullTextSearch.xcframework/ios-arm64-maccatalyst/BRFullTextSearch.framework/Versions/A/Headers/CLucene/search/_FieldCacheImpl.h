@@ -11,7 +11,7 @@ CL_CLASS_DEF(index,IndexReader)
 CL_CLASS_DEF(search,SortComparator)
 CL_CLASS_DEF(search,SortComparatorSource)
 #include "FieldCache.h"
-#include "CLucene/LuceneThreads.h"
+#include <BRFullTextSearch/CLucene/LuceneThreads.h>
 CL_NS_DEF(search)
 
 class fieldcacheCacheType;

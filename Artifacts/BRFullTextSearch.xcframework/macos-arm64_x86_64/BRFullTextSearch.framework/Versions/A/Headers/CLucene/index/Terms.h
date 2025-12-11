@@ -7,7 +7,7 @@
 #ifndef _lucene_index_Terms_
 #define _lucene_index_Terms_
 
-#include "CLucene/util/Equators.h"
+#include <BRFullTextSearch/CLucene/util/Equators.h>
 CL_NS_DEF(index)
 
 //predefine

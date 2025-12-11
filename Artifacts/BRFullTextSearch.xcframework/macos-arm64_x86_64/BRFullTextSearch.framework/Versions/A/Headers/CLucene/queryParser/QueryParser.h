@@ -7,11 +7,11 @@
 #ifndef _lucene_queryParser_QueryParser_
 #define _lucene_queryParser_QueryParser_
 
-#include "CLucene/util/Array.h"
+#include <BRFullTextSearch/CLucene/util/Array.h>
 #include "QueryParserTokenManager.h"
-#include "CLucene/document/DateTools.h"
-#include "CLucene/util/VoidMap.h"
-#include "CLucene/util/VoidList.h"
+#include <BRFullTextSearch/CLucene/document/DateTools.h>
+#include <BRFullTextSearch/CLucene/util/VoidMap.h>
+#include <BRFullTextSearch/CLucene/util/VoidList.h>
 
 CL_CLASS_DEF(index,Term)
 CL_CLASS_DEF(analysis,Analyzer)

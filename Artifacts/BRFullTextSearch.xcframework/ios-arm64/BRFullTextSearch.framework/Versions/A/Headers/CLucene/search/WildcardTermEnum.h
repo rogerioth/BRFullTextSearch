@@ -7,10 +7,10 @@
 #ifndef _lucene_search_WildcardTermEnum_
 #define _lucene_search_WildcardTermEnum_
 
-//#include "CLucene/index/IndexReader.h"
+//#include <BRFullTextSearch/CLucene/index/IndexReader.h>
 CL_CLASS_DEF(index,Term)
 CL_CLASS_DEF(index,IndexReader)
-//#include "CLucene/index/Terms.h"
+//#include <BRFullTextSearch/CLucene/index/Terms.h>
 #include "FilteredTermEnum.h"
 
 CL_NS_DEF(search)

@@ -7,7 +7,7 @@
 #ifndef _lucene_document_Document_
 #define _lucene_document_Document_
 
-#include "CLucene/util/VoidList.h"
+#include <BRFullTextSearch/CLucene/util/VoidList.h>
 #include "Field.h"
 
 ///todo: jlucene has change from using DocumentFieldList/Enumeration

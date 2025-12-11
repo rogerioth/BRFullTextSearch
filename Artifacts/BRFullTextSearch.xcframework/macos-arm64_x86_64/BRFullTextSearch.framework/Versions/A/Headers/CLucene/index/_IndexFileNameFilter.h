@@ -7,8 +7,8 @@
 #ifndef _lucene_index_IndexFileNameFilter_
 #define _lucene_index_IndexFileNameFilter_
 
-#include "CLucene/util/Equators.h"
-#include "CLucene/util/VoidList.h"
+#include <BRFullTextSearch/CLucene/util/Equators.h>
+#include <BRFullTextSearch/CLucene/util/VoidList.h>
 
 CL_NS_DEF(index)
 class FilenameFilter{

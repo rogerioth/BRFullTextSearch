@@ -7,9 +7,9 @@
 #ifndef _lucene_analysis_Analyzers_
 #define _lucene_analysis_Analyzers_
 
-#include "CLucene/util/VoidList.h"
-#include "CLucene/util/VoidMap.h"
-#include "CLucene/util/CLStreams.h"
+#include <BRFullTextSearch/CLucene/util/VoidList.h>
+#include <BRFullTextSearch/CLucene/util/VoidMap.h>
+#include <BRFullTextSearch/CLucene/util/CLStreams.h>
 #include "AnalysisHeader.h"
 
 CL_NS_DEF(analysis)

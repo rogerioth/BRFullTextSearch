@@ -8,7 +8,7 @@
 #define _lucene_search_ConjunctionScorer_
 
 #include "Scorer.h"
-#include "CLucene/util/Array.h"
+#include <BRFullTextSearch/CLucene/util/Array.h>
 CL_NS_DEF(search)
 
 /** Scorer for conjunctions, sets of queries, all of which are required. */

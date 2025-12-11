@@ -7,9 +7,9 @@
 #ifndef _lucene_analysis_AnalysisHeader_
 #define _lucene_analysis_AnalysisHeader_
 
-#include "CLucene/index/Payload.h"
-#include "CLucene/util/VoidList.h"
-#include "CLucene/LuceneThreads.h"
+#include <BRFullTextSearch/CLucene/index/Payload.h>
+#include <BRFullTextSearch/CLucene/util/VoidList.h>
+#include <BRFullTextSearch/CLucene/LuceneThreads.h>
 
 CL_CLASS_DEF(util,Reader)
 CL_NS_DEF(analysis)

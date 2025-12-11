@@ -7,8 +7,8 @@
 #ifndef _lucene_store_Directory
 #define _lucene_store_Directory
 
-#include "CLucene/util/Equators.h"
-#include "CLucene/LuceneThreads.h"
+#include <BRFullTextSearch/CLucene/util/Equators.h>
+#include <BRFullTextSearch/CLucene/LuceneThreads.h>
 #include <string>
 #include <vector>
 

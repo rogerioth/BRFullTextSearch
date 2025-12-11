@@ -16,7 +16,7 @@ CL_CLASS_DEF(index, Term)
 CL_CLASS_DEF(index, TermDocs)
 CL_CLASS_DEF(index, TermEnum)
 
-#include "CLucene/analysis/AnalysisHeader.h"
+#include <BRFullTextSearch/CLucene/analysis/AnalysisHeader.h>
 
 CL_NS_DEF(index)
 

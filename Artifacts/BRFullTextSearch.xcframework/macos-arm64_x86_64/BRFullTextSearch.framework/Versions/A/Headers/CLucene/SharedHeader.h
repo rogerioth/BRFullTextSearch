@@ -15,7 +15,7 @@
 * and is not available through the shared library.
 */
 
-#include "CLucene/clucene-config.h"
+#include <BRFullTextSearch/CLucene/clucene-config.h>
 
 //some early definitions
 #if defined(_MSC_VER) || defined(__BORLANDC__)
@@ -198,11 +198,11 @@
 ////////////////////////////////////////////////////////
 //Class interfaces
 ////////////////////////////////////////////////////////
-#include "CLucene/debug/lucenebase.h"
+#include <BRFullTextSearch/CLucene/debug/lucenebase.h>
 ////////////////////////////////////////////////////////
 
 //memory handling macros/functions
-#include "CLucene/debug/mem.h"
+#include <BRFullTextSearch/CLucene/debug/mem.h>
 
 #ifdef DMALLOC
   #include <stdlib.h>

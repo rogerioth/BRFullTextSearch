@@ -15,7 +15,7 @@ CL_CLASS_DEF(store,RAMOutputStream)
 CL_CLASS_DEF(document,Document)
 CL_CLASS_DEF(document,Field)
 CL_CLASS_DEF(index,FieldInfos)
-#include "CLucene/util/Array.h"
+#include <BRFullTextSearch/CLucene/util/Array.h>
 
 CL_NS_DEF(index)
 class FieldsWriter :LUCENE_BASE{

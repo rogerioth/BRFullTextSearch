@@ -7,7 +7,7 @@
 #ifndef _lucene_index_TermInfosWriter_
 #define _lucene_index_TermInfosWriter_
 
-#include "CLucene/util/Array.h"
+#include <BRFullTextSearch/CLucene/util/Array.h>
 
 CL_CLASS_DEF(store,Directory)
 //#include "FieldInfos.h"

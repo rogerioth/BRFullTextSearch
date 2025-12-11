@@ -9,7 +9,7 @@
 
 
 #include "Scorer.h"
-#include "CLucene/index/Terms.h"
+#include <BRFullTextSearch/CLucene/index/Terms.h>
 CL_CLASS_DEF(search,Similarity)
 #include "SearchHeader.h"
 

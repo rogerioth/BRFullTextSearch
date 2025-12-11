@@ -8,7 +8,7 @@
 #define _lucene_store_RAMDirectory_
 
 
-#include "CLucene/util/VoidMap.h"
+#include <BRFullTextSearch/CLucene/util/VoidMap.h>
 #include "Directory.h"
 CL_CLASS_DEF(store,RAMFile)
 

@@ -7,8 +7,8 @@
 #ifndef _lucene_index_IndexWriter_
 #define _lucene_index_IndexWriter_
 
-#include "CLucene/util/VoidList.h"
-#include "CLucene/util/Array.h"
+#include <BRFullTextSearch/CLucene/util/VoidList.h>
+#include <BRFullTextSearch/CLucene/util/Array.h>
 CL_CLASS_DEF(search,Similarity)
 CL_CLASS_DEF(store,Lock)
 CL_CLASS_DEF(analysis,Analyzer)
@@ -17,7 +17,7 @@ CL_CLASS_DEF(store,LuceneLock)
 CL_CLASS_DEF(document,Document)
 
 #include "MergePolicy.h"
-#include "CLucene/LuceneThreads.h"
+#include <BRFullTextSearch/CLucene/LuceneThreads.h>
 
 CL_NS_DEF(index)
 class SegmentInfo;

@@ -7,7 +7,7 @@
 #ifndef _lucene_analysis_snowball_analyser_
 #define _lucene_analysis_snowball_analyser_
 
-#include "CLucene/analysis/AnalysisHeader.h"
+#include <BRFullTextSearch/CLucene/analysis/AnalysisHeader.h>
 
 CL_CLASS_DEF(util,BufferedReader)
 CL_NS_DEF2(analysis,snowball)

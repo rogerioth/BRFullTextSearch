@@ -9,7 +9,7 @@
 
 CL_CLASS_DEF(index, IndexReader)
 CL_CLASS_DEF2(search, spans, SpanNearQuery)
-#include "CLucene/util/PriorityQueue.h"
+#include <BRFullTextSearch/CLucene/util/PriorityQueue.h>
 #include "Spans.h"
 
 CL_NS_DEF2( search, spans )

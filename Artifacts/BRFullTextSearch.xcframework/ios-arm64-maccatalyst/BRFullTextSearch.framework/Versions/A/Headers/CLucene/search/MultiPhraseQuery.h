@@ -8,8 +8,8 @@
 #define _lucene_search_MultiPhraseQuery_
 
 #include "Query.h"
-#include "CLucene/util/Array.h"
-#include "CLucene/util/VoidList.h"
+#include <BRFullTextSearch/CLucene/util/Array.h>
+#include <BRFullTextSearch/CLucene/util/VoidList.h>
 
 CL_CLASS_DEF(index,Term)
 

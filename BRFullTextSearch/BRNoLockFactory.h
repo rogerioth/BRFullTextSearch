@@ -9,7 +9,11 @@
 #ifndef __BRCLucene__BRNoLockFactory__
 #define __BRCLucene__BRNoLockFactory__
 
+#if defined(COCOAPODS)
 #include "CLucene/store/LockFactory.h"
+#else
+#include <BRFullTextSearch/CLucene/store/LockFactory.h>
+#endif
 
 CL_NS_DEF(store)
 

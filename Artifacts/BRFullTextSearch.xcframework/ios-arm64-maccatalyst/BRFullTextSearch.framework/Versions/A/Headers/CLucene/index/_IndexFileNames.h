@@ -2,7 +2,7 @@
 #ifndef _lucene_index_IndexFileNames_
 #define _lucene_index_IndexFileNames_
 
-#include "CLucene/util/Array.h"
+#include <BRFullTextSearch/CLucene/util/Array.h>
 
 CL_NS_DEF(index)
 

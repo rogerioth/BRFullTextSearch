@@ -7,7 +7,7 @@
 #ifndef _lucene_debug_lucenebase_
 #define _lucene_debug_lucenebase_
 
-#include "CLucene/LuceneThreads.h"
+#include <BRFullTextSearch/CLucene/LuceneThreads.h>
 
 CL_NS_DEF(debug)
 
