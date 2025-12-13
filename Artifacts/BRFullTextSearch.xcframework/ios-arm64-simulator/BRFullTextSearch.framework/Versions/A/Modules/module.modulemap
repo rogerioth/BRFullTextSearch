@@ -1,5 +1,0 @@
-framework module BRFullTextSearch {
-  umbrella header "BRFullTextSearch.h"
-  export *
-  module * { export * }
-}

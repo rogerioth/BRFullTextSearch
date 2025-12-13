@@ -10,6 +10,7 @@ DEVICE_FW="${OUTPUT_DIR}/device/BRFullTextSearch.framework"
 SIMULATOR_FW="${OUTPUT_DIR}/simulator/BRFullTextSearch.framework"
 MACOS_FW="${ROOT_DIR}/DerivedData/Build/Products/Release/BRFullTextSearch.framework"
 CATALYST_LIB="${ROOT_DIR}/DerivedData/Build/Products/Release-maccatalyst/libBRFullTextSearch.a"
+CATALYST_CLUCENE_LIB="${ROOT_DIR}/DerivedData/Build/Products/Release-maccatalyst/BRCLucene-iOS/libBRCLucene-iOS.a"
 CATALYST_FW="${OUTPUT_DIR}/catalyst/BRFullTextSearch.framework"
 
 XCFRAMEWORK_PATH="${OUTPUT_DIR}/BRFullTextSearch.xcframework"
@@ -129,7 +130,10 @@ EOF
 }
 
 echo "Building Mac Catalyst framework wrapper..."
-build_framework_from_static_lib "${CATALYST_LIB}" "${CATALYST_FW}"
+CATALYST_COMBINED_LIB="${OUTPUT_DIR}/catalyst/libBRFullTextSearch+BRCLucene.a"
+rm -f "${CATALYST_COMBINED_LIB}"
+libtool -static -o "${CATALYST_COMBINED_LIB}" "${CATALYST_LIB}" "${CATALYST_CLUCENE_LIB}"
+build_framework_from_static_lib "${CATALYST_COMBINED_LIB}" "${CATALYST_FW}"
 
 # Ensure all slices have a module map for Swift import.
 copy_public_headers "${DEVICE_FW}"

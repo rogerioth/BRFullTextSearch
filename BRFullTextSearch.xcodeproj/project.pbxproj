@@ -872,12 +872,17 @@ echo \"Output to: ${OUTPUT_DIR}\"
 
 build_framework() {
   local source_lib=\"$1\"
-  local framework_path=\"$2\"
+  local clucene_lib=\"$2\"
+  local framework_path=\"$3\"
 
   rm -rf \"${framework_path}\"
   mkdir -p \"${framework_path}/Versions/A\"
 
-  cp \"${source_lib}\" \"${framework_path}/Versions/A/${PRODUCT}\"
+  if [ -f \"${clucene_lib}\" ]; then
+    libtool -static -o \"${framework_path}/Versions/A/${PRODUCT}\" \"${source_lib}\" \"${clucene_lib}\"
+  else
+    cp \"${source_lib}\" \"${framework_path}/Versions/A/${PRODUCT}\"
+  fi
   cp -r \"${HEADERS_DIR}\" \"${framework_path}/Versions/A/\"
   cp -r \"${RESOURCE_DIR}\" \"${framework_path}/Versions/A/\"
 
@@ -902,10 +907,10 @@ for CONFIG in ${CONFIGURATIONS}; do
     rm -rf \"${DEVICE_DIR}\" \"${SIMULATOR_DIR}\"
 
     xcodebuild -workspace \"${WORKSPACE}\" -scheme \"${TARGET}\" -configuration ${CONFIG} -sdk iphoneos -destination \"generic/platform=iOS\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO CONFIGURATION_BUILD_DIR=${DEVICE_DIR} SYMROOT=${PRODUCTS_DIR} BUILD_DIR=${PRODUCTS_DIR} OBJROOT=${OBJROOT} -derivedDataPath \"${PACKAGER_DERIVED_DATA}\"
-    xcodebuild -workspace \"${WORKSPACE}\" -scheme \"${TARGET}\" -configuration ${CONFIG} -sdk iphonesimulator -destination \"generic/platform=iOS Simulator\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO CONFIGURATION_BUILD_DIR=${SIMULATOR_DIR} SYMROOT=${PRODUCTS_DIR} BUILD_DIR=${PRODUCTS_DIR} OBJROOT=${OBJROOT} -derivedDataPath \"${PACKAGER_DERIVED_DATA}\"
+    xcodebuild -workspace \"${WORKSPACE}\" -scheme \"${TARGET}\" -configuration ${CONFIG} -sdk iphonesimulator -destination \"generic/platform=iOS Simulator\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO CONFIGURATION_BUILD_DIR=${SIMULATOR_DIR} SYMROOT=${PRODUCTS_DIR} BUILD_DIR=${PRODUCTS_DIR} OBJROOT=${OBJROOT} -derivedDataPath \"${PACKAGER_DERIVED_DATA}\" \"EXCLUDED_ARCHS[sdk=iphonesimulator*]\"=i386
 
-    build_framework \"${DEVICE_DIR}/${LIB}\" \"${DEVICE_FRAMEWORK_DIR}\"
-    build_framework \"${SIMULATOR_DIR}/${LIB}\" \"${SIMULATOR_FRAMEWORK_DIR}\"
+    build_framework \"${DEVICE_DIR}/${LIB}\" \"${DEVICE_DIR}/libBRCLucene-iOS.a\" \"${DEVICE_FRAMEWORK_DIR}\"
+    build_framework \"${SIMULATOR_DIR}/${LIB}\" \"${SIMULATOR_DIR}/libBRCLucene-iOS.a\" \"${SIMULATOR_FRAMEWORK_DIR}\"
 
     xcodebuild -create-xcframework         -framework \"${DEVICE_FRAMEWORK_DIR}\"         -framework \"${SIMULATOR_FRAMEWORK_DIR}\"         -output \"${FRAMEWORK_DIR}\"
 done
