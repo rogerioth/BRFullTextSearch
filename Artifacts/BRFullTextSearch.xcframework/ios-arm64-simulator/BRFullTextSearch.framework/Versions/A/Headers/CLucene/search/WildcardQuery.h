@@ -7,7 +7,7 @@
 #ifndef _lucene_search_WildcardQuery_
 #define _lucene_search_WildcardQuery_
 
-//#include <BRFullTextSearch/CLucene/index/IndexReader.h>
+//#include "CLucene/index/IndexReader.h"
 CL_CLASS_DEF(index,Term)
 #include "MultiTermQuery.h"
 #include "Filter.h"

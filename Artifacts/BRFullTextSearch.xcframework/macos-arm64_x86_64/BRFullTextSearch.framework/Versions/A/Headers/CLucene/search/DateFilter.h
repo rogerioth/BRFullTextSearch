@@ -8,11 +8,11 @@
 #define _lucene_search_DateFilter_
 
 
-//#include <BRFullTextSearch/CLucene/document/DateField.h>
+//#include "CLucene/document/DateField.h"
 CL_CLASS_DEF(index,Term)
-//#include <BRFullTextSearch/CLucene/index/Terms.h>
-//#include <BRFullTextSearch/CLucene/index/IndexReader.h>
-//#include <BRFullTextSearch/CLucene/util/BitSet.h>
+//#include "CLucene/index/Terms.h"
+//#include "CLucene/index/IndexReader.h"
+//#include "CLucene/util/BitSet.h"
 #include "Filter.h"
 
 CL_NS_DEF(search)

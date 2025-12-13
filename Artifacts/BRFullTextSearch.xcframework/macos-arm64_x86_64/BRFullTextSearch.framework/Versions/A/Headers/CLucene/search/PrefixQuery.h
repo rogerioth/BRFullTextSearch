@@ -8,8 +8,8 @@
 #define _lucene_search_PrefixQuery
 
 CL_CLASS_DEF(index,Term)
-//#include <BRFullTextSearch/CLucene/index/Terms.h>
-//#include <BRFullTextSearch/CLucene/index/IndexReader.h>
+//#include "CLucene/index/Terms.h"
+//#include "CLucene/index/IndexReader.h"
 //#include "SearchHeader.h"
 //#include "BooleanQuery.h"
 //#include "TermQuery.h"

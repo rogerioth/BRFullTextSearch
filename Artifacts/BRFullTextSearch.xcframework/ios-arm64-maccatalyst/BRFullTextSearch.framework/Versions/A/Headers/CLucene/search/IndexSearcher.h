@@ -20,8 +20,8 @@ CL_CLASS_DEF(search,Sort)
 CL_CLASS_DEF(search,HitCollector)
 CL_CLASS_DEF(search,Explanation)
 CL_CLASS_DEF(index,IndexReader)
-//#include <BRFullTextSearch/CLucene/index/IndexReader.h>
-//#include <BRFullTextSearch/CLucene/util/BitSet.h>
+//#include "CLucene/index/IndexReader.h"
+//#include "CLucene/util/BitSet.h"
 //#include "HitQueue.h"
 //#include "FieldSortedHitQueue.h"
 

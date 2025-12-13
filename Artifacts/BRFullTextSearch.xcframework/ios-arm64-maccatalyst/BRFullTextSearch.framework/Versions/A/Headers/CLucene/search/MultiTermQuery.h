@@ -9,11 +9,11 @@
 
 
 CL_CLASS_DEF(util,StringBuffer)
-//#include <BRFullTextSearch/CLucene/index/IndexReader.h>
+//#include "CLucene/index/IndexReader.h"
 CL_CLASS_DEF(index,Term)
 CL_CLASS_DEF(search,FilteredTermEnum)
 CL_CLASS_DEF(index,IndexReader)
-//#include <BRFullTextSearch/CLucene/index/Terms.h>
+//#include "CLucene/index/Terms.h"
 //#include "FilteredTermEnum.h"
 //#include "SearchHeader.h"
 //#include "BooleanQuery.h"

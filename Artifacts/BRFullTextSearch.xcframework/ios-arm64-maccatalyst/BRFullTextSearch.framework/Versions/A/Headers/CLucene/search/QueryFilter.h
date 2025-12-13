@@ -7,8 +7,8 @@
 #ifndef _lucene_search_QueryFilter_
 #define _lucene_search_QueryFilter_
 
-//#include <BRFullTextSearch/CLucene/util/BitSet.h>
-//#include <BRFullTextSearch/CLucene/index/IndexReader.h>
+//#include "CLucene/util/BitSet.h"
+//#include "CLucene/index/IndexReader.h"
 //#include "SearchHeader.h"
 #include "Filter.h"
 CL_CLASS_DEF(search,Query)

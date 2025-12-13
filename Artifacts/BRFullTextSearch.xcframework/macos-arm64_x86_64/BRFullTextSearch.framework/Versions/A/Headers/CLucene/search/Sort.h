@@ -8,9 +8,9 @@
 #define _lucene_search_Sort_
 
 
-//#include <BRFullTextSearch/CLucene/index/IndexReader.h>
+//#include "CLucene/index/IndexReader.h"
 //#include "SearchHeader.h"
-//#include <BRFullTextSearch/CLucene/util/Equator.h>
+//#include "CLucene/util/Equator.h"
 CL_CLASS_DEF(index,IndexReader)
 CL_CLASS_DEF(util,Comparable)
 

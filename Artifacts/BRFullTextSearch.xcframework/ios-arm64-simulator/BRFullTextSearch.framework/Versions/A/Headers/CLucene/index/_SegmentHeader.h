@@ -9,7 +9,7 @@
 
 #include "_SegmentInfos.h"
 #include <BRFullTextSearch/CLucene/util/BitSet.h>
-//#include <BRFullTextSearch/CLucene/util/VoidMap.h>
+//#include "CLucene/util/VoidMap.h"
 #include <BRFullTextSearch/CLucene/store/IndexInput.h>
 #include <BRFullTextSearch/CLucene/store/IndexOutput.h>
 #include <BRFullTextSearch/CLucene/index/IndexReader.h>

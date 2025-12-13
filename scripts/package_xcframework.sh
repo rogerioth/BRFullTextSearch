@@ -93,9 +93,23 @@ patch_headers() {
   local dest="${framework_path}/Versions/A/Headers"
   
   echo "Patching headers in ${dest}..."
-  # Replace #include "CLucene/..." with #include <BRFullTextSearch/CLucene/...> in all headers
+  # CLucene headers assume an `-I` root with a `CLucene/` folder.
+  # When consumed as a framework/XCFramework (notably under Mac Catalyst), Clang module scanning
+  # does not reliably treat the framework's `Headers/` directory as an include root, so nested
+  # includes like `#include "CLucene/LuceneThreads.h"` can fail even when the file exists.
+  #
+  # Fix by rewriting CLucene internal includes to framework-style includes.
   if [[ -d "${dest}/CLucene" ]]; then
-    find "${dest}/CLucene" -name "*.h" -print0 | xargs -0 sed -i '' 's|#include "CLucene/\(.*\)"|#include <BRFullTextSearch/CLucene/\1>|g'
+    while IFS= read -r -d '' header; do
+      perl -pi -e 's{^(\s*#\s*include\s+)[<"]CLucene/([^>"]+)[>"]}{$1<BRFullTextSearch/CLucene/$2>}g' "${header}"
+    done < <(find "${dest}/CLucene" -name "*.h" -print0)
+
+    # Verify no raw `CLucene/...` includes remain (these break Catalyst imports).
+    if grep -R --line-number --include="*.h" -E '^[[:space:]]*#[[:space:]]*include[[:space:]]+[<"]CLucene/' "${dest}/CLucene" >/dev/null; then
+      echo "ERROR: Unpatched CLucene includes remain under ${dest}/CLucene"
+      grep -R --line-number --include="*.h" -E '^[[:space:]]*#[[:space:]]*include[[:space:]]+[<"]CLucene/' "${dest}/CLucene" | head -n 50
+      exit 1
+    fi
   fi
 }
 

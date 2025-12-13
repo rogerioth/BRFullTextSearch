@@ -7,8 +7,8 @@
 #ifndef _lucene_search_CachingWrapperFilter_
 #define _lucene_search_CachingWrapperFilter_
 
-//#include <BRFullTextSearch/CLucene/util/BitSet.h>
-//#include <BRFullTextSearch/CLucene/index/IndexReader.h>
+//#include "CLucene/util/BitSet.h"
+//#include "CLucene/index/IndexReader.h"
 #include "Filter.h"
 
 CL_NS_DEF(search)
