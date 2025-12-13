@@ -130,6 +130,7 @@ EOF
 }
 
 echo "Building Mac Catalyst framework wrapper..."
+mkdir -p "${OUTPUT_DIR}/catalyst"
 CATALYST_COMBINED_LIB="${OUTPUT_DIR}/catalyst/libBRFullTextSearch+BRCLucene.a"
 rm -f "${CATALYST_COMBINED_LIB}"
 libtool -static -o "${CATALYST_COMBINED_LIB}" "${CATALYST_LIB}" "${CATALYST_CLUCENE_LIB}"
